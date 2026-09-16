@@ -2,7 +2,7 @@ import gradio as gr
 import whisper
 
 # Load speech recognition model
-model = whisper.load_model("small")
+model = whisper.load_model("tiny")
 
 
 def process_report(audio, phone):
