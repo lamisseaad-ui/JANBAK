@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,18 +28,10 @@ body {
 .header {
     margin: 30px auto 20px;
     max-width: 1200px;
-
     padding: 28px 32px;
-
-    background: linear-gradient(
-        135deg,
-        #111923,
-        #080d14
-    );
-
+    background: linear-gradient(135deg, #111923, #080d14);
     border: 1px solid #263444;
     border-radius: 20px;
-
     box-shadow: 0 15px 45px rgba(0,0,0,.35);
 }
 
@@ -50,31 +43,21 @@ body {
 
 .subtitle {
     margin-top: 6px;
-
     color: #8290a0;
-
     font-size: 14px;
     letter-spacing: 1.5px;
 }
 
 .status {
     display: inline-block;
-
     margin-top: 18px;
-
     padding: 7px 14px;
-
     border-radius: 30px;
-
     background: #0d2118;
-
     border: 1px solid #245c3d;
-
     color: #5de09a;
-
     font-size: 11px;
     font-weight: 800;
-
     letter-spacing: 1px;
 }
 
@@ -83,31 +66,22 @@ body {
 
 .container {
     max-width: 1200px;
-
     margin: auto;
-
     padding: 0 20px 40px;
 }
 
 .section-title {
     margin: 22px 0 10px;
-
     font-size: 18px;
-
     font-weight: 800;
-
     letter-spacing: .5px;
 }
 
 .panel {
     background: #0c121a;
-
     border: 1px solid #202c39;
-
     border-radius: 17px;
-
     padding: 22px;
-
     margin-bottom: 18px;
 }
 
@@ -116,33 +90,21 @@ body {
 
 label {
     display: block;
-
     margin-bottom: 8px;
-
     color: #9ba8b7;
-
     font-size: 12px;
-
     font-weight: 700;
 }
 
 input {
     width: 100%;
-
     padding: 14px;
-
     margin-bottom: 18px;
-
     background: #080d14;
-
     border: 1px solid #263443;
-
     border-radius: 10px;
-
     color: white;
-
     font-size: 14px;
-
     outline: none;
 }
 
@@ -155,34 +117,68 @@ input:focus {
 
 .voice-box {
     padding: 28px;
-
     text-align: center;
-
     border: 1px dashed #334252;
-
     border-radius: 14px;
-
     background: #080e15;
 }
 
 .mic {
     font-size: 38px;
-
     margin-bottom: 10px;
 }
 
 .voice-title {
     font-size: 15px;
-
     font-weight: 800;
 }
 
 .voice-text {
     color: #687787;
-
     font-size: 12px;
-
     margin-top: 6px;
+}
+
+
+/* ================= RECORDING ================= */
+
+.record-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.record-button {
+    padding: 11px 18px;
+    border: 1px solid #334252;
+    border-radius: 10px;
+    background: #111923;
+    color: white;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.record-button:hover {
+    filter: brightness(1.2);
+}
+
+.record-button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.recording-status {
+    margin-top: 12px;
+    color: #687787;
+    font-size: 11px;
+}
+
+#audioPlayback {
+    display: none;
+    width: 100%;
+    margin-top: 15px;
 }
 
 
@@ -190,33 +186,21 @@ input:focus {
 
 .analyze {
     width: 100%;
-
     margin-top: 18px;
-
     padding: 17px;
-
     border: none;
-
     border-radius: 12px;
-
     background: #e63946;
-
     color: white;
-
     font-size: 15px;
-
     font-weight: 900;
-
     letter-spacing: .5px;
-
     cursor: pointer;
-
     transition: .2s;
 }
 
 .analyze:hover {
     transform: translateY(-2px);
-
     filter: brightness(1.1);
 }
 
@@ -225,17 +209,11 @@ input:focus {
 
 .transcription {
     background: #090f16;
-
     border: 1px solid #253240;
-
     border-radius: 13px;
-
     padding: 18px;
-
     min-height: 100px;
-
     color: #dce4ec;
-
     line-height: 1.6;
 }
 
@@ -244,67 +222,42 @@ input:focus {
 
 .dashboard {
     display: none;
-
-    background: linear-gradient(
-        145deg,
-        #0d141d,
-        #080d14
-    );
-
+    background: linear-gradient(145deg, #0d141d, #080d14);
     border: 1px solid #263443;
-
     border-radius: 18px;
-
     padding: 22px;
-
     box-shadow: 0 15px 45px rgba(0,0,0,.3);
 }
 
 .analysis-header {
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     padding-bottom: 18px;
-
     border-bottom: 1px solid #202b37;
-
     margin-bottom: 18px;
 }
 
 .analysis-label {
     color: #718091;
-
     font-size: 11px;
-
     letter-spacing: 2px;
-
     font-weight: 800;
 }
 
 .analysis-title {
     margin-top: 4px;
-
     font-size: 23px;
-
     font-weight: 900;
 }
 
 .live {
     background: #10241a;
-
     border: 1px solid #285b41;
-
     color: #62d99b;
-
     padding: 7px 11px;
-
     border-radius: 20px;
-
     font-size: 10px;
-
     font-weight: 800;
 }
 
@@ -313,48 +266,34 @@ input:focus {
 
 .cards {
     display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
+    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
 }
 
 .card {
     background: #090f16;
-
     border: 1px solid #253240;
-
     border-radius: 14px;
-
     padding: 19px;
-
     min-height: 130px;
 }
 
 .card-label {
     color: #718091;
-
     font-size: 10px;
-
     letter-spacing: 1.5px;
-
     font-weight: 800;
-
     margin-bottom: 13px;
 }
 
 .card-value {
     font-size: 18px;
-
     font-weight: 900;
-
     line-height: 1.3;
 }
 
 .risk {
     font-size: 28px;
-
     font-weight: 950;
 }
 
@@ -372,11 +311,8 @@ input:focus {
 
 .card-status {
     color: #52606f;
-
     font-size: 9px;
-
     letter-spacing: 1px;
-
     margin-top: 12px;
 }
 
@@ -385,19 +321,12 @@ input:focus {
 
 .action {
     display: flex;
-
     align-items: center;
-
     gap: 15px;
-
     margin-top: 13px;
-
     padding: 16px;
-
     background: #0a1017;
-
     border: 1px solid #24313e;
-
     border-radius: 13px;
 }
 
@@ -407,19 +336,14 @@ input:focus {
 
 .action-label {
     color: #718091;
-
     font-size: 9px;
-
     letter-spacing: 1.5px;
-
     font-weight: 800;
 }
 
 .action-text {
     margin-top: 4px;
-
     font-size: 14px;
-
     font-weight: 700;
 }
 
@@ -428,21 +352,13 @@ input:focus {
 
 .report {
     background: #070c12;
-
     border: 1px solid #253240;
-
     border-radius: 13px;
-
     padding: 20px;
-
     white-space: pre-wrap;
-
     font-family: monospace;
-
     font-size: 13px;
-
     line-height: 1.6;
-
     color: #dce4ec;
 }
 
@@ -451,11 +367,8 @@ input:focus {
 
 .footer {
     text-align: center;
-
     color: #52606d;
-
     font-size: 10px;
-
     padding: 25px 0 10px;
 }
 
@@ -470,15 +383,18 @@ input:focus {
 
     .analysis-header {
         flex-direction: column;
-
         align-items: flex-start;
-
         gap: 12px;
     }
 
     .logo {
         font-size: 32px;
     }
+
+    .record-buttons {
+        flex-direction: column;
+    }
+
 }
 
 </style>
@@ -542,6 +458,39 @@ input:focus {
         <div class="voice-text">
             Record or provide an incident description
         </div>
+
+        <div class="record-buttons">
+
+            <button
+                class="record-button"
+                id="startButton"
+                onclick="startRecording()"
+            >
+                🎙️ START RECORDING
+            </button>
+
+            <button
+                class="record-button"
+                id="stopButton"
+                onclick="stopRecording()"
+                disabled
+            >
+                ⏹️ STOP
+            </button>
+
+        </div>
+
+        <div
+            class="recording-status"
+            id="recordingStatus"
+        >
+            Ready to record
+        </div>
+
+        <audio
+            id="audioPlayback"
+            controls
+        ></audio>
 
     </div>
 
@@ -727,6 +676,126 @@ input:focus {
 
 <script>
 
+/* ================= REAL VOICE RECORDING ================= */
+
+let mediaRecorder;
+let audioChunks = [];
+let audioBlob = null;
+
+
+async function startRecording() {
+
+    try {
+
+        const stream =
+            await navigator.mediaDevices.getUserMedia({
+                audio: true
+            });
+
+        audioChunks = [];
+
+        mediaRecorder =
+            new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable =
+            function(event) {
+
+                if (event.data.size > 0) {
+                    audioChunks.push(event.data);
+                }
+
+            };
+
+
+        mediaRecorder.onstop =
+            function() {
+
+                audioBlob =
+                    new Blob(
+                        audioChunks,
+                        { type: "audio/webm" }
+                    );
+
+                const audioURL =
+                    URL.createObjectURL(audioBlob);
+
+                const audio =
+                    document.getElementById(
+                        "audioPlayback"
+                    );
+
+                audio.src =
+                    audioURL;
+
+                audio.style.display =
+                    "block";
+
+                document.getElementById(
+                    "recordingStatus"
+                ).innerText =
+                    "Recording saved — ready to play";
+
+            };
+
+
+        mediaRecorder.start();
+
+        document.getElementById(
+            "startButton"
+        ).disabled = true;
+
+        document.getElementById(
+            "stopButton"
+        ).disabled = false;
+
+        document.getElementById(
+            "recordingStatus"
+        ).innerText =
+            "🔴 Recording in progress...";
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "recordingStatus"
+        ).innerText =
+            "Microphone access was denied.";
+
+    }
+
+}
+
+
+function stopRecording() {
+
+    if (
+        mediaRecorder &&
+        mediaRecorder.state !== "inactive"
+    ) {
+
+        mediaRecorder.stop();
+
+        mediaRecorder.stream
+            .getTracks()
+            .forEach(track => track.stop());
+
+        document.getElementById(
+            "startButton"
+        ).disabled = false;
+
+        document.getElementById(
+            "stopButton"
+        ).disabled = true;
+
+    }
+
+}
+
+
+/* ================= AI ANALYSIS ================= */
 
 function analyzeReport() {
 
@@ -737,11 +806,9 @@ function analyzeReport() {
     /*
        DEMO INCIDENT
 
-       This version is designed for the
-       public web demo.
-
-       Replace the demo text later with
-       a real Speech-to-Text API if needed.
+       The recording system above is real.
+       AI transcription will be connected
+       in the next step.
     */
 
     const text =
@@ -929,8 +996,8 @@ Final response decisions remain with authorized personnel.
 
 }
 
-
 </script>
 
 </body>
 </html>
+```
