@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JANBAK AI</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #06090e;
+    color: #eef3f8;
+    min-height: 100vh;
+}
+
+
+/* ================= HEADER ================= */
+
+.header {
+    margin: 30px auto 20px;
+    max-width: 1200px;
+
+    padding: 28px 32px;
+
+    background: linear-gradient(
+        135deg,
+        #111923,
+        #080d14
+    );
+
+    border: 1px solid #263444;
+    border-radius: 20px;
+
+    box-shadow: 0 15px 45px rgba(0,0,0,.35);
+}
+
+.logo {
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: 5px;
+}
+
+.subtitle {
+    margin-top: 6px;
+
+    color: #8290a0;
+
+    font-size: 14px;
+    letter-spacing: 1.5px;
+}
+
+.status {
+    display: inline-block;
+
+    margin-top: 18px;
+
+    padding: 7px 14px;
+
+    border-radius: 30px;
+
+    background: #0d2118;
+
+    border: 1px solid #245c3d;
+
+    color: #5de09a;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+/* ================= MAIN ================= */
+
+.container {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 0 20px 40px;
+}
+
+.section-title {
+    margin: 22px 0 10px;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    letter-spacing: .5px;
+}
+
+.panel {
+    background: #0c121a;
+
+    border: 1px solid #202c39;
+
+    border-radius: 17px;
+
+    padding: 22px;
+
+    margin-bottom: 18px;
+}
+
+
+/* ================= INPUT ================= */
+
+label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #9ba8b7;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+input {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-bottom: 18px;
+
+    background: #080d14;
+
+    border: 1px solid #263443;
+
+    border-radius: 10px;
+
+    color: white;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+input:focus {
+    border-color: #536779;
+}
+
+
+/* ================= VOICE ================= */
+
+.voice-box {
+    padding: 28px;
+
+    text-align: center;
+
+    border: 1px dashed #334252;
+
+    border-radius: 14px;
+
+    background: #080e15;
+}
+
+.mic {
+    font-size: 38px;
+
+    margin-bottom: 10px;
+}
+
+.voice-title {
+    font-size: 15px;
+
+    font-weight: 800;
+}
+
+.voice-text {
+    color: #687787;
+
+    font-size: 12px;
+
+    margin-top: 6px;
+}
+
+
+/* ================= BUTTON ================= */
+
+.analyze {
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 17px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #e63946;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 900;
+
+    letter-spacing: .5px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.analyze:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.1);
+}
+
+
+/* ================= TRANSCRIPTION ================= */
+
+.transcription {
+    background: #090f16;
+
+    border: 1px solid #253240;
+
+    border-radius: 13px;
+
+    padding: 18px;
+
+    min-height: 100px;
+
+    color: #dce4ec;
+
+    line-height: 1.6;
+}
+
+
+/* ================= DASHBOARD ================= */
+
+.dashboard {
+    display: none;
+
+    background: linear-gradient(
+        145deg,
+        #0d141d,
+        #080d14
+    );
+
+    border: 1px solid #263443;
+
+    border-radius: 18px;
+
+    padding: 22px;
+
+    box-shadow: 0 15px 45px rgba(0,0,0,.3);
+}
+
+.analysis-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid #202b37;
+
+    margin-bottom: 18px;
+}
+
+.analysis-label {
+    color: #718091;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    font-weight: 800;
+}
+
+.analysis-title {
+    margin-top: 4px;
+
+    font-size: 23px;
+
+    font-weight: 900;
+}
+
+.live {
+    background: #10241a;
+
+    border: 1px solid #285b41;
+
+    color: #62d99b;
+
+    padding: 7px 11px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+}
+
+
+/* ================= RESULT CARDS ================= */
+
+.cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+}
+
+.card {
+    background: #090f16;
+
+    border: 1px solid #253240;
+
+    border-radius: 14px;
+
+    padding: 19px;
+
+    min-height: 130px;
+}
+
+.card-label {
+    color: #718091;
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+
+    font-weight: 800;
+
+    margin-bottom: 13px;
+}
+
+.card-value {
+    font-size: 18px;
+
+    font-weight: 900;
+
+    line-height: 1.3;
+}
+
+.risk {
+    font-size: 28px;
+
+    font-weight: 950;
+}
+
+.critical {
+    color: #ff3b4f;
+}
+
+.high {
+    color: #ff8a3d;
+}
+
+.medium {
+    color: #f5c84b;
+}
+
+.card-status {
+    color: #52606f;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    margin-top: 12px;
+}
+
+
+/* ================= ACTION ================= */
+
+.action {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 13px;
+
+    padding: 16px;
+
+    background: #0a1017;
+
+    border: 1px solid #24313e;
+
+    border-radius: 13px;
+}
+
+.action-icon {
+    font-size: 22px;
+}
+
+.action-label {
+    color: #718091;
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+
+    font-weight: 800;
+}
+
+.action-text {
+    margin-top: 4px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+/* ================= REPORT ================= */
+
+.report {
+    background: #070c12;
+
+    border: 1px solid #253240;
+
+    border-radius: 13px;
+
+    padding: 20px;
+
+    white-space: pre-wrap;
+
+    font-family: monospace;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    color: #dce4ec;
+}
+
+
+/* ================= FOOTER ================= */
+
+.footer {
+    text-align: center;
+
+    color: #52606d;
+
+    font-size: 10px;
+
+    padding: 25px 0 10px;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 800px) {
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .analysis-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 12px;
+    }
+
+    .logo {
+        font-size: 32px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<div class="header">
+
+    <div class="logo">
+        JANBAK AI
+    </div>
+
+    <div class="subtitle">
+        AI-POWERED SECURITY INTELLIGENCE PLATFORM
+    </div>
+
+    <div class="status">
+        ● SYSTEM READY
+    </div>
+
+</div>
+
+
+<div class="container">
+
+
+<!-- ================= INPUT ================= -->
+
+<div class="section-title">
+    01 — INCOMING INCIDENT REPORT
+</div>
+
+<div class="panel">
+
+    <label>
+        REPORTER CONTACT
+    </label>
+
+    <input
+        id="phone"
+        type="text"
+        placeholder="+966 5X XXX XXXX"
+    >
+
+
+    <div class="voice-box">
+
+        <div class="mic">
+            🎙️
+        </div>
+
+        <div class="voice-title">
+            VOICE INCIDENT REPORT
+        </div>
+
+        <div class="voice-text">
+            Record or provide an incident description
+        </div>
+
+    </div>
+
+
+    <button
+        class="analyze"
+        onclick="analyzeReport()"
+    >
+        🚨 SEND REPORT & RUN AI ANALYSIS
+    </button>
+
+</div>
+
+
+<!-- ================= AI ANALYSIS ================= -->
+
+<div class="section-title">
+    02 — JANBAK AI ANALYSIS
+</div>
+
+<div class="panel">
+
+    <label>
+        SPEECH TRANSCRIPTION
+    </label>
+
+    <div
+        class="transcription"
+        id="transcription"
+    >
+        Waiting for incoming incident report...
+    </div>
+
+</div>
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<div
+    class="dashboard"
+    id="dashboard"
+>
+
+    <div class="analysis-header">
+
+        <div>
+
+            <div class="analysis-label">
+                JANBAK AI ANALYSIS
+            </div>
+
+            <div class="analysis-title">
+                INCIDENT DETECTED
+            </div>
+
+        </div>
+
+        <div class="live">
+            ● AI ANALYSIS COMPLETE
+        </div>
+
+    </div>
+
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <div class="card-label">
+                INCIDENT TYPE
+            </div>
+
+            <div
+                class="card-value"
+                id="incident"
+            >
+                —
+            </div>
+
+            <div class="card-status">
+                CLASSIFIED
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-label">
+                RISK LEVEL
+            </div>
+
+            <div
+                class="risk"
+                id="risk"
+            >
+                —
+            </div>
+
+            <div class="card-status">
+                PRIORITY ASSESSMENT
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-label">
+                ASSIGNED AUTHORITY
+            </div>
+
+            <div
+                class="card-value"
+                id="authority"
+            >
+                —
+            </div>
+
+            <div class="card-status">
+                ROUTING RECOMMENDATION
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="action">
+
+        <div class="action-icon">
+            ⚡
+        </div>
+
+        <div>
+
+            <div class="action-label">
+                RECOMMENDED ACTION
+            </div>
+
+            <div
+                class="action-text"
+                id="action"
+            >
+                —
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= REPORT ================= -->
+
+<div class="section-title">
+    03 — AUTHORITY RESPONSE INTELLIGENCE
+</div>
+
+<div class="panel">
+
+    <div
+        class="report"
+        id="report"
+    >
+        Authority report will appear after analysis.
+    </div>
+
+</div>
+
+
+<div class="footer">
+    JANBAK AI • Security Intelligence Prototype<br>
+    AI-assisted decision support — final decisions remain with authorized personnel.
+</div>
+
+
+</div>
+
+
+<script>
+
+
+function analyzeReport() {
+
+    const phone =
+        document.getElementById("phone").value;
+
+
+    /*
+       DEMO INCIDENT
+
+       This version is designed for the
+       public web demo.
+
+       Replace the demo text later with
+       a real Speech-to-Text API if needed.
+    */
+
+    const text =
+        "There is a fire in the building. Smoke is coming from the main entrance.";
+
+
+    document.getElementById("transcription")
+        .innerText = text;
+
+
+    let incident =
+        "GENERAL SECURITY REPORT";
+
+    let risk =
+        "MEDIUM";
+
+    let authority =
+        "Relevant Authority";
+
+    let action =
+        "Review and verify the reported incident.";
+
+
+    const lower =
+        text.toLowerCase();
+
+
+    if (
+        lower.includes("fire") ||
+        lower.includes("smoke") ||
+        lower.includes("burning")
+    ) {
+
+        incident =
+            "FIRE / EMERGENCY";
+
+        risk =
+            "CRITICAL";
+
+        authority =
+            "Emergency Response Authority";
+
+        action =
+            "Immediate emergency response recommended.";
+
+    }
+
+
+    else if (
+        lower.includes("weapon") ||
+        lower.includes("attack") ||
+        lower.includes("threat")
+    ) {
+
+        incident =
+            "SECURITY THREAT";
+
+        risk =
+            "HIGH";
+
+        authority =
+            "Security Authority";
+
+        action =
+            "Immediate verification and security response recommended.";
+
+    }
+
+
+    else if (
+        lower.includes("theft") ||
+        lower.includes("robbery") ||
+        lower.includes("suspicious")
+    ) {
+
+        incident =
+            "SUSPICIOUS ACTIVITY";
+
+        risk =
+            "MEDIUM";
+
+        authority =
+            "Security Authority";
+
+        action =
+            "Verify the reported activity and assess the situation.";
+
+    }
+
+
+    document.getElementById("incident")
+        .innerText = incident;
+
+
+    const riskElement =
+        document.getElementById("risk");
+
+    riskElement.innerText =
+        risk;
+
+
+    riskElement.className =
+        "risk " + risk.toLowerCase();
+
+
+    document.getElementById("authority")
+        .innerText = authority;
+
+
+    document.getElementById("action")
+        .innerText = action;
+
+
+    const reporter =
+        phone || "ANONYMOUS";
+
+
+    const reportId =
+        "JAN-" +
+        Math.random()
+            .toString(36)
+            .substring(2, 8)
+            .toUpperCase();
+
+
+    const now =
+        new Date()
+            .toLocaleString();
+
+
+    const report =
+
+`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+              JANBAK AI
+        AUTHORITY INCIDENT REPORT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+REPORT ID
+${reportId}
+
+DATE / TIME
+${now}
+
+REPORTER
+${reporter}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+INCIDENT CLASSIFICATION
+${incident}
+
+RISK LEVEL
+${risk}
+
+ASSIGNED AUTHORITY
+${authority}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DETECTED INFORMATION
+${text}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+RECOMMENDED ACTION
+${action}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STATUS
+REQUIRES HUMAN REVIEW
+
+JANBAK AI provides decision-support analysis.
+Final response decisions remain with authorized personnel.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+
+
+    document.getElementById("report")
+        .innerText = report;
+
+
+    document.getElementById("dashboard")
+        .style.display = "block";
+
+}
+
+
+</script>
+
+</body>
+</html>
