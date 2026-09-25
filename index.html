@@ -1,400 +1,561 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>JANBAK AI</title>
+<title>JANBAK | Security Intelligence Platform</title>
 
 <style>
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #06090e;
-    color: #eef3f8;
-    min-height: 100vh;
+body{
+    background:#070b12;
+    color:#f4f7fb;
+    min-height:100vh;
+    overflow-x:hidden;
 }
 
+/* =========================
+   LAYOUT
+========================= */
 
-/* ================= HEADER ================= */
-
-.header {
-    margin: 30px auto 20px;
-    max-width: 1200px;
-    padding: 28px 32px;
-    background: linear-gradient(135deg, #111923, #080d14);
-    border: 1px solid #263444;
-    border-radius: 20px;
-    box-shadow: 0 15px 45px rgba(0,0,0,.35);
+.app{
+    display:flex;
+    min-height:100vh;
 }
 
-.logo {
-    font-size: 40px;
-    font-weight: 900;
-    letter-spacing: 5px;
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    width:250px;
+    background:#0b1018;
+    border-right:1px solid #1b2430;
+    padding:24px 16px;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
 }
 
-.subtitle {
-    margin-top: 6px;
-    color: #8290a0;
-    font-size: 14px;
-    letter-spacing: 1.5px;
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px;
+    margin-bottom:35px;
 }
 
-.status {
-    display: inline-block;
-    margin-top: 18px;
-    padding: 7px 14px;
-    border-radius: 30px;
-    background: #0d2118;
-    border: 1px solid #245c3d;
-    color: #5de09a;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1px;
+.logo-mark{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#ffffff,#7f8fa3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#070b12;
+    font-weight:900;
+    font-size:18px;
 }
 
-
-/* ================= MAIN ================= */
-
-.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 0 20px 40px;
+.logo h1{
+    font-size:21px;
+    letter-spacing:1px;
 }
 
-.section-title {
-    margin: 22px 0 10px;
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: .5px;
+.logo span{
+    display:block;
+    color:#7f8a99;
+    font-size:10px;
+    margin-top:3px;
 }
 
-.panel {
-    background: #0c121a;
-    border: 1px solid #202c39;
-    border-radius: 17px;
-    padding: 22px;
-    margin-bottom: 18px;
+.nav-title{
+    color:#596575;
+    font-size:10px;
+    letter-spacing:1.5px;
+    margin:20px 12px 10px;
 }
 
-
-/* ================= INPUT ================= */
-
-label {
-    display: block;
-    margin-bottom: 8px;
-    color: #9ba8b7;
-    font-size: 12px;
-    font-weight: 700;
+.nav-item{
+    padding:13px 14px;
+    border-radius:10px;
+    margin:5px 0;
+    color:#8e9aaa;
+    cursor:pointer;
+    transition:.2s;
 }
 
-input {
-    width: 100%;
-    padding: 14px;
-    margin-bottom: 18px;
-    background: #080d14;
-    border: 1px solid #263443;
-    border-radius: 10px;
-    color: white;
-    font-size: 14px;
-    outline: none;
+.nav-item:hover,
+.nav-item.active{
+    background:#151d28;
+    color:white;
 }
 
-input:focus {
-    border-color: #536779;
+.nav-item.active{
+    border-left:3px solid white;
 }
 
+/* =========================
+   MAIN
+========================= */
 
-/* ================= VOICE ================= */
-
-.voice-box {
-    padding: 28px;
-    text-align: center;
-    border: 1px dashed #334252;
-    border-radius: 14px;
-    background: #080e15;
+.main{
+    margin-left:250px;
+    width:calc(100% - 250px);
+    padding:28px 34px;
 }
 
-.mic {
-    font-size: 38px;
-    margin-bottom: 10px;
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:28px;
 }
 
-.voice-title {
-    font-size: 15px;
-    font-weight: 800;
+.topbar h2{
+    font-size:25px;
 }
 
-.voice-text {
-    color: #687787;
-    font-size: 12px;
-    margin-top: 6px;
+.status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#9ba6b5;
+    font-size:12px;
 }
 
-
-/* ================= RECORDING ================= */
-
-.record-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 18px;
+.status-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#42d392;
+    box-shadow:0 0 12px #42d392;
 }
 
-.record-button {
-    padding: 11px 18px;
-    border: 1px solid #334252;
-    border-radius: 10px;
-    background: #111923;
-    color: white;
-    font-size: 12px;
-    font-weight: 800;
-    cursor: pointer;
+/* =========================
+   BUTTON
+========================= */
+
+.primary-btn{
+    background:#f4f7fb;
+    color:#080c12;
+    border:none;
+    padding:12px 20px;
+    border-radius:9px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
 }
 
-.record-button:hover {
-    filter: brightness(1.2);
+.primary-btn:hover{
+    transform:translateY(-1px);
+    opacity:.9;
 }
 
-.record-button:disabled {
-    opacity: .4;
-    cursor: not-allowed;
+/* =========================
+   METRICS
+========================= */
+
+.metrics{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-bottom:22px;
 }
 
-.recording-status {
-    margin-top: 12px;
-    color: #687787;
-    font-size: 11px;
+.metric{
+    background:#0d131c;
+    border:1px solid #1a2430;
+    border-radius:14px;
+    padding:20px;
 }
 
-#audioPlayback {
-    display: none;
-    width: 100%;
-    margin-top: 15px;
+.metric-label{
+    color:#778394;
+    font-size:12px;
+    margin-bottom:12px;
 }
 
-
-/* ================= BUTTON ================= */
-
-.analyze {
-    width: 100%;
-    margin-top: 18px;
-    padding: 17px;
-    border: none;
-    border-radius: 12px;
-    background: #e63946;
-    color: white;
-    font-size: 15px;
-    font-weight: 900;
-    letter-spacing: .5px;
-    cursor: pointer;
-    transition: .2s;
+.metric-value{
+    font-size:28px;
+    font-weight:750;
 }
 
-.analyze:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.1);
+.metric-sub{
+    color:#657181;
+    font-size:11px;
+    margin-top:8px;
 }
 
+/* =========================
+   GRID
+========================= */
 
-/* ================= TRANSCRIPTION ================= */
-
-.transcription {
-    background: #090f16;
-    border: 1px solid #253240;
-    border-radius: 13px;
-    padding: 18px;
-    min-height: 100px;
-    color: #dce4ec;
-    line-height: 1.6;
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:20px;
 }
 
-
-/* ================= DASHBOARD ================= */
-
-.dashboard {
-    display: none;
-    background: linear-gradient(145deg, #0d141d, #080d14);
-    border: 1px solid #263443;
-    border-radius: 18px;
-    padding: 22px;
-    box-shadow: 0 15px 45px rgba(0,0,0,.3);
+.panel{
+    background:#0d131c;
+    border:1px solid #1a2430;
+    border-radius:14px;
+    overflow:hidden;
 }
 
-.analysis-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 18px;
-    border-bottom: 1px solid #202b37;
-    margin-bottom: 18px;
+.panel-header{
+    padding:18px 20px;
+    border-bottom:1px solid #1a2430;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-.analysis-label {
-    color: #718091;
-    font-size: 11px;
-    letter-spacing: 2px;
-    font-weight: 800;
+.panel-title{
+    font-weight:700;
+    font-size:14px;
 }
 
-.analysis-title {
-    margin-top: 4px;
-    font-size: 23px;
-    font-weight: 900;
+.panel-sub{
+    color:#687585;
+    font-size:11px;
+    margin-top:4px;
 }
 
-.live {
-    background: #10241a;
-    border: 1px solid #285b41;
-    color: #62d99b;
-    padding: 7px 11px;
-    border-radius: 20px;
-    font-size: 10px;
-    font-weight: 800;
+/* =========================
+   MAP
+========================= */
+
+.map{
+    height:340px;
+    position:relative;
+    background:
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:40px 40px;
+    overflow:hidden;
 }
 
-
-/* ================= RESULT CARDS ================= */
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+.map::before{
+    content:"";
+    position:absolute;
+    width:420px;
+    height:420px;
+    border-radius:50%;
+    border:1px solid #283444;
+    top:40px;
+    left:30%;
 }
 
-.card {
-    background: #090f16;
-    border: 1px solid #253240;
-    border-radius: 14px;
-    padding: 19px;
-    min-height: 130px;
+.map::after{
+    content:"";
+    position:absolute;
+    width:650px;
+    height:1px;
+    background:#222d3a;
+    top:50%;
+    left:0;
+    transform:rotate(-20deg);
 }
 
-.card-label {
-    color: #718091;
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    font-weight: 800;
-    margin-bottom: 13px;
+.map-label{
+    position:absolute;
+    top:18px;
+    left:20px;
+    color:#596777;
+    font-size:10px;
+    letter-spacing:1px;
 }
 
-.card-value {
-    font-size: 18px;
-    font-weight: 900;
-    line-height: 1.3;
+.marker{
+    position:absolute;
+    width:13px;
+    height:13px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 20px rgba(255,255,255,.8);
 }
 
-.risk {
-    font-size: 28px;
-    font-weight: 950;
+.marker.one{
+    left:38%;
+    top:38%;
 }
 
-.critical {
-    color: #ff3b4f;
+.marker.two{
+    left:64%;
+    top:62%;
 }
 
-.high {
-    color: #ff8a3d;
+.marker.three{
+    left:72%;
+    top:31%;
 }
 
-.medium {
-    color: #f5c84b;
+.marker.high{
+    background:#ff5d5d;
+    box-shadow:0 0 20px rgba(255,80,80,.8);
 }
 
-.card-status {
-    color: #52606f;
-    font-size: 9px;
-    letter-spacing: 1px;
-    margin-top: 12px;
+/* =========================
+   INCIDENTS
+========================= */
+
+.incident{
+    padding:16px 20px;
+    border-bottom:1px solid #18212c;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-
-/* ================= ACTION ================= */
-
-.action {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-top: 13px;
-    padding: 16px;
-    background: #0a1017;
-    border: 1px solid #24313e;
-    border-radius: 13px;
+.incident:last-child{
+    border-bottom:none;
 }
 
-.action-icon {
-    font-size: 22px;
+.incident-left{
+    display:flex;
+    gap:13px;
+    align-items:center;
 }
 
-.action-label {
-    color: #718091;
-    font-size: 9px;
-    letter-spacing: 1.5px;
-    font-weight: 800;
+.incident-icon{
+    width:38px;
+    height:38px;
+    border-radius:9px;
+    background:#161e29;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.action-text {
-    margin-top: 4px;
-    font-size: 14px;
-    font-weight: 700;
+.incident-name{
+    font-size:13px;
+    font-weight:650;
 }
 
-
-/* ================= REPORT ================= */
-
-.report {
-    background: #070c12;
-    border: 1px solid #253240;
-    border-radius: 13px;
-    padding: 20px;
-    white-space: pre-wrap;
-    font-family: monospace;
-    font-size: 13px;
-    line-height: 1.6;
-    color: #dce4ec;
+.incident-location{
+    color:#697686;
+    font-size:10px;
+    margin-top:4px;
 }
 
-
-/* ================= FOOTER ================= */
-
-.footer {
-    text-align: center;
-    color: #52606d;
-    font-size: 10px;
-    padding: 25px 0 10px;
+.badge{
+    padding:5px 8px;
+    border-radius:6px;
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:.5px;
 }
 
+.badge.high{
+    background:rgba(255,70,70,.12);
+    color:#ff7070;
+}
 
-/* ================= MOBILE ================= */
+.badge.medium{
+    background:rgba(255,190,60,.12);
+    color:#ffc35c;
+}
 
-@media (max-width: 800px) {
+.badge.low{
+    background:rgba(70,210,145,.12);
+    color:#55dca0;
+}
 
-    .cards {
-        grid-template-columns: 1fr;
+/* =========================
+   NEW INCIDENT
+========================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(8px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(700px,92%);
+    background:#0d131c;
+    border:1px solid #26313e;
+    border-radius:18px;
+    padding:28px;
+    box-shadow:0 30px 100px rgba(0,0,0,.6);
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:25px;
+}
+
+.close{
+    color:#778394;
+    cursor:pointer;
+    font-size:22px;
+}
+
+.input-types{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.input-card{
+    border:1px solid #222e3b;
+    background:#111821;
+    border-radius:12px;
+    padding:20px;
+    text-align:center;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.input-card:hover,
+.input-card.selected{
+    border-color:#7e8b9b;
+    background:#171f2a;
+}
+
+.input-icon{
+    font-size:24px;
+    margin-bottom:9px;
+}
+
+textarea{
+    width:100%;
+    height:130px;
+    resize:none;
+    background:#080d14;
+    border:1px solid #222d39;
+    border-radius:10px;
+    color:white;
+    padding:15px;
+    outline:none;
+    margin-bottom:15px;
+}
+
+textarea:focus{
+    border-color:#657386;
+}
+
+.analyze{
+    width:100%;
+}
+
+/* =========================
+   AI RESULT
+========================= */
+
+.ai-result{
+    margin-top:20px;
+    display:none;
+    background:#101822;
+    border:1px solid #273341;
+    border-radius:12px;
+    padding:20px;
+}
+
+.ai-result.show{
+    display:block;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:15px;
+}
+
+.result-box{
+    background:#0b1118;
+    padding:13px;
+    border-radius:8px;
+}
+
+.result-label{
+    font-size:9px;
+    color:#687686;
+    text-transform:uppercase;
+}
+
+.result-value{
+    margin-top:6px;
+    font-size:13px;
+    font-weight:700;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:900px){
+
+    .sidebar{
+        width:70px;
+        padding:15px 8px;
     }
 
-    .analysis-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
+    .logo h1,
+    .logo span,
+    .nav-title,
+    .nav-item span{
+        display:none;
     }
 
-    .logo {
-        font-size: 32px;
+    .main{
+        margin-left:70px;
+        width:calc(100% - 70px);
+        padding:20px;
     }
 
-    .record-buttons {
-        flex-direction: column;
+    .metrics{
+        grid-template-columns:repeat(2,1fr);
     }
 
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:550px){
+
+    .metrics{
+        grid-template-columns:1fr;
+    }
+
+    .input-types{
+        grid-template-columns:1fr;
+    }
+
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    .topbar{
+        gap:15px;
+        align-items:flex-start;
+        flex-direction:column;
+    }
 }
 
 </style>
@@ -403,596 +564,563 @@ input:focus {
 
 <body>
 
+<div class="app">
 
-<!-- ================= HEADER ================= -->
+<!-- ================= SIDEBAR ================= -->
 
-<div class="header">
+<aside class="sidebar">
 
     <div class="logo">
-        JANBAK AI
+
+        <div class="logo-mark">
+            J
+        </div>
+
+        <div>
+            <h1>JANBAK</h1>
+            <span>SECURITY INTELLIGENCE</span>
+        </div>
+
     </div>
 
-    <div class="subtitle">
-        AI-POWERED SECURITY INTELLIGENCE PLATFORM
+
+    <div class="nav-title">OPERATIONS</div>
+
+    <div class="nav-item active">
+        ◈ <span>Dashboard</span>
     </div>
 
-    <div class="status">
-        ● SYSTEM READY
+    <div class="nav-item" onclick="openModal()">
+        ＋ <span>New Incident</span>
     </div>
+
+    <div class="nav-item">
+        ◉ <span>Live Incidents</span>
+    </div>
+
+
+    <div class="nav-title">INTELLIGENCE</div>
+
+    <div class="nav-item">
+        ◌ <span>Analytics</span>
+    </div>
+
+    <div class="nav-item">
+        ◇ <span>Risk Analysis</span>
+    </div>
+
+
+    <div class="nav-title">SYSTEM</div>
+
+    <div class="nav-item">
+        ⚙ <span>Settings</span>
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+    <div class="topbar">
+
+        <div>
+            <h2>Security Operations Dashboard</h2>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                JANBAK Intelligence System — Online
+            </div>
+
+        </div>
+
+        <button class="primary-btn" onclick="openModal()">
+            + New Incident
+        </button>
+
+    </div>
+
+
+    <!-- ================= METRICS ================= -->
+
+    <section class="metrics">
+
+        <div class="metric">
+            <div class="metric-label">ACTIVE INCIDENTS</div>
+            <div class="metric-value" id="activeCount">12</div>
+            <div class="metric-sub">Currently monitored</div>
+        </div>
+
+
+        <div class="metric">
+            <div class="metric-label">HIGH RISK</div>
+            <div class="metric-value">03</div>
+            <div class="metric-sub">Require immediate attention</div>
+        </div>
+
+
+        <div class="metric">
+            <div class="metric-label">AI ANALYSIS</div>
+            <div class="metric-value">98%</div>
+            <div class="metric-sub">Reports successfully processed</div>
+        </div>
+
+
+        <div class="metric">
+            <div class="metric-label">RESPONSE STATUS</div>
+            <div class="metric-value">94%</div>
+            <div class="metric-sub">Routed to responsible agency</div>
+        </div>
+
+    </section>
+
+
+    <!-- ================= DASHBOARD ================= -->
+
+    <section class="dashboard-grid">
+
+
+        <!-- MAP -->
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <div class="panel-title">
+                        Incident Intelligence Map
+                    </div>
+
+                    <div class="panel-sub">
+                        Active security events
+                    </div>
+                </div>
+
+                <span class="badge high">
+                    LIVE
+                </span>
+
+            </div>
+
+
+            <div class="map">
+
+                <div class="map-label">
+                    OPERATIONAL VIEW
+                </div>
+
+                <div class="marker one high"></div>
+
+                <div class="marker two"></div>
+
+                <div class="marker three"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- INCIDENT FEED -->
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <div class="panel-title">
+                        Live Incident Feed
+                    </div>
+
+                    <div class="panel-sub">
+                        Recent intelligence events
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="incident">
+
+                <div class="incident-left">
+
+                    <div class="incident-icon">
+                        ⚠
+                    </div>
+
+                    <div>
+
+                        <div class="incident-name">
+                            Traffic Collision
+                        </div>
+
+                        <div class="incident-location">
+                            Northern Riyadh
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <span class="badge high">
+                    HIGH
+                </span>
+
+            </div>
+
+
+            <div class="incident">
+
+                <div class="incident-left">
+
+                    <div class="incident-icon">
+                        🔥
+                    </div>
+
+                    <div>
+
+                        <div class="incident-name">
+                            Fire Report
+                        </div>
+
+                        <div class="incident-location">
+                            Al Malqa
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <span class="badge medium">
+                    MEDIUM
+                </span>
+
+            </div>
+
+
+            <div class="incident">
+
+                <div class="incident-left">
+
+                    <div class="incident-icon">
+                        ◉
+                    </div>
+
+                    <div>
+
+                        <div class="incident-name">
+                            Suspicious Activity
+                        </div>
+
+                        <div class="incident-location">
+                            Central Riyadh
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <span class="badge low">
+                    LOW
+                </span>
+
+            </div>
+
+
+            <div class="incident">
+
+                <div class="incident-left">
+
+                    <div class="incident-icon">
+                        ⚠
+                    </div>
+
+                    <div>
+
+                        <div class="incident-name">
+                            Crowd Disturbance
+                        </div>
+
+                        <div class="incident-location">
+                            Eastern District
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <span class="badge medium">
+                    MEDIUM
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
 
 </div>
 
 
-<div class="container">
+<!-- ================= NEW INCIDENT MODAL ================= -->
 
+<div class="modal" id="incidentModal">
 
-<!-- ================= INPUT ================= -->
+    <div class="modal-box">
 
-<div class="section-title">
-    01 — INCOMING INCIDENT REPORT
-</div>
+        <div class="modal-head">
 
-<div class="panel">
+            <div>
+                <h2>New Incident</h2>
+                <div class="panel-sub">
+                    Submit information for AI-assisted analysis
+                </div>
+            </div>
 
-    <label>
-        REPORTER CONTACT
-    </label>
-
-    <input
-        id="phone"
-        type="text"
-        placeholder="+966 5X XXX XXXX"
-    >
-
-
-    <div class="voice-box">
-
-        <div class="mic">
-            🎙️
-        </div>
-
-        <div class="voice-title">
-            VOICE INCIDENT REPORT
-        </div>
-
-        <div class="voice-text">
-            Record or provide an incident description
-        </div>
-
-        <div class="record-buttons">
-
-            <button
-                class="record-button"
-                id="startButton"
-                onclick="startRecording()"
-            >
-                🎙️ START RECORDING
-            </button>
-
-            <button
-                class="record-button"
-                id="stopButton"
-                onclick="stopRecording()"
-                disabled
-            >
-                ⏹️ STOP
-            </button>
+            <div class="close" onclick="closeModal()">
+                ×
+            </div>
 
         </div>
+
+
+        <div class="input-types">
+
+            <div class="input-card selected">
+                <div class="input-icon">🎙</div>
+                <div>Voice</div>
+            </div>
+
+            <div class="input-card">
+                <div class="input-icon">▣</div>
+                <div>Image</div>
+            </div>
+
+            <div class="input-card">
+                <div class="input-icon">≡</div>
+                <div>Text</div>
+            </div>
+
+        </div>
+
+
+        <textarea
+            id="incidentText"
+            placeholder="Describe the incident...">
+        </textarea>
+
+
+        <button
+            class="primary-btn analyze"
+            onclick="analyzeIncident()">
+
+            Analyze Incident
+
+        </button>
+
 
         <div
-            class="recording-status"
-            id="recordingStatus"
-        >
-            Ready to record
-        </div>
+            class="ai-result"
+            id="aiResult">
 
-        <audio
-            id="audioPlayback"
-            controls
-        ></audio>
+            <strong>
+                AI-Assisted Incident Analysis
+            </strong>
 
-    </div>
+            <div class="result-grid">
 
+                <div class="result-box">
 
-    <button
-        class="analyze"
-        onclick="analyzeReport()"
-    >
-        🚨 SEND REPORT & RUN AI ANALYSIS
-    </button>
+                    <div class="result-label">
+                        Incident Type
+                    </div>
 
-</div>
+                    <div
+                        class="result-value"
+                        id="typeResult">
+                        —
+                    </div>
 
-
-<!-- ================= AI ANALYSIS ================= -->
-
-<div class="section-title">
-    02 — JANBAK AI ANALYSIS
-</div>
-
-<div class="panel">
-
-    <label>
-        SPEECH TRANSCRIPTION
-    </label>
-
-    <div
-        class="transcription"
-        id="transcription"
-    >
-        Waiting for incoming incident report...
-    </div>
-
-</div>
+                </div>
 
 
-<!-- ================= DASHBOARD ================= -->
+                <div class="result-box">
 
-<div
-    class="dashboard"
-    id="dashboard"
->
+                    <div class="result-label">
+                        Severity
+                    </div>
 
-    <div class="analysis-header">
+                    <div
+                        class="result-value"
+                        id="severityResult">
+                        —
+                    </div>
 
-        <div>
-
-            <div class="analysis-label">
-                JANBAK AI ANALYSIS
-            </div>
-
-            <div class="analysis-title">
-                INCIDENT DETECTED
-            </div>
-
-        </div>
-
-        <div class="live">
-            ● AI ANALYSIS COMPLETE
-        </div>
-
-    </div>
+                </div>
 
 
-    <div class="cards">
+                <div class="result-box">
 
+                    <div class="result-label">
+                        Responsible Agency
+                    </div>
 
-        <div class="card">
+                    <div
+                        class="result-value"
+                        id="agencyResult">
+                        —
+                    </div>
 
-            <div class="card-label">
-                INCIDENT TYPE
-            </div>
+                </div>
 
-            <div
-                class="card-value"
-                id="incident"
-            >
-                —
-            </div>
-
-            <div class="card-status">
-                CLASSIFIED
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-label">
-                RISK LEVEL
-            </div>
-
-            <div
-                class="risk"
-                id="risk"
-            >
-                —
-            </div>
-
-            <div class="card-status">
-                PRIORITY ASSESSMENT
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-label">
-                ASSIGNED AUTHORITY
-            </div>
-
-            <div
-                class="card-value"
-                id="authority"
-            >
-                —
-            </div>
-
-            <div class="card-status">
-                ROUTING RECOMMENDATION
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-    <div class="action">
-
-        <div class="action-icon">
-            ⚡
-        </div>
-
-        <div>
-
-            <div class="action-label">
-                RECOMMENDED ACTION
-            </div>
-
-            <div
-                class="action-text"
-                id="action"
-            >
-                —
             </div>
 
         </div>
 
     </div>
-
-</div>
-
-
-<!-- ================= REPORT ================= -->
-
-<div class="section-title">
-    03 — AUTHORITY RESPONSE INTELLIGENCE
-</div>
-
-<div class="panel">
-
-    <div
-        class="report"
-        id="report"
-    >
-        Authority report will appear after analysis.
-    </div>
-
-</div>
-
-
-<div class="footer">
-    JANBAK AI • Security Intelligence Prototype<br>
-    AI-assisted decision support — final decisions remain with authorized personnel.
-</div>
-
 
 </div>
 
 
 <script>
 
-/* ================= REAL VOICE RECORDING ================= */
+/* =========================
+   MODAL
+========================= */
 
-let mediaRecorder;
-let audioChunks = [];
-let audioBlob = null;
+function openModal(){
 
-
-async function startRecording() {
-
-    try {
-
-        const stream =
-            await navigator.mediaDevices.getUserMedia({
-                audio: true
-            });
-
-        audioChunks = [];
-
-        mediaRecorder =
-            new MediaRecorder(stream);
-
-        mediaRecorder.ondataavailable =
-            function(event) {
-
-                if (event.data.size > 0) {
-                    audioChunks.push(event.data);
-                }
-
-            };
-
-
-        mediaRecorder.onstop =
-            function() {
-
-                audioBlob =
-                    new Blob(
-                        audioChunks,
-                        { type: "audio/webm" }
-                    );
-
-                const audioURL =
-                    URL.createObjectURL(audioBlob);
-
-                const audio =
-                    document.getElementById(
-                        "audioPlayback"
-                    );
-
-                audio.src =
-                    audioURL;
-
-                audio.style.display =
-                    "block";
-
-                document.getElementById(
-                    "recordingStatus"
-                ).innerText =
-                    "Recording saved — ready to play";
-
-            };
-
-
-        mediaRecorder.start();
-
-        document.getElementById(
-            "startButton"
-        ).disabled = true;
-
-        document.getElementById(
-            "stopButton"
-        ).disabled = false;
-
-        document.getElementById(
-            "recordingStatus"
-        ).innerText =
-            "🔴 Recording in progress...";
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        document.getElementById(
-            "recordingStatus"
-        ).innerText =
-            "Microphone access was denied.";
-
-    }
+    document
+        .getElementById("incidentModal")
+        .classList
+        .add("show");
 
 }
 
 
-function stopRecording() {
+function closeModal(){
 
-    if (
-        mediaRecorder &&
-        mediaRecorder.state !== "inactive"
-    ) {
-
-        mediaRecorder.stop();
-
-        mediaRecorder.stream
-            .getTracks()
-            .forEach(track => track.stop());
-
-        document.getElementById(
-            "startButton"
-        ).disabled = false;
-
-        document.getElementById(
-            "stopButton"
-        ).disabled = true;
-
-    }
+    document
+        .getElementById("incidentModal")
+        .classList
+        .remove("show");
 
 }
 
 
-/* ================= AI ANALYSIS ================= */
+/* =========================
+   INPUT SELECTION
+========================= */
 
-function analyzeReport() {
+document
+    .querySelectorAll(".input-card")
+    .forEach(card => {
 
-    const phone =
-        document.getElementById("phone").value;
+        card.addEventListener("click", () => {
+
+            document
+                .querySelectorAll(".input-card")
+                .forEach(c =>
+                    c.classList.remove("selected")
+                );
+
+            card.classList.add("selected");
+
+        });
+
+    });
 
 
-    /*
-       DEMO INCIDENT
+/* =========================
+   AI DEMO ANALYSIS
+========================= */
 
-       The recording system above is real.
-       AI transcription will be connected
-       in the next step.
-    */
+function analyzeIncident(){
 
     const text =
-        "There is a fire in the building. Smoke is coming from the main entrance.";
+        document
+        .getElementById("incidentText")
+        .value
+        .toLowerCase();
 
 
-    document.getElementById("transcription")
-        .innerText = text;
+    let type = "General Security Incident";
+    let severity = "MEDIUM";
+    let agency = "Security Operations";
 
 
-    let incident =
-        "GENERAL SECURITY REPORT";
+    if(
+        text.includes("fire") ||
+        text.includes("smoke") ||
+        text.includes("burn")
+    ){
 
-    let risk =
-        "MEDIUM";
-
-    let authority =
-        "Relevant Authority";
-
-    let action =
-        "Review and verify the reported incident.";
-
-
-    const lower =
-        text.toLowerCase();
-
-
-    if (
-        lower.includes("fire") ||
-        lower.includes("smoke") ||
-        lower.includes("burning")
-    ) {
-
-        incident =
-            "FIRE / EMERGENCY";
-
-        risk =
-            "CRITICAL";
-
-        authority =
-            "Emergency Response Authority";
-
-        action =
-            "Immediate emergency response recommended.";
+        type = "Fire";
+        severity = "HIGH";
+        agency = "Civil Defense";
 
     }
 
 
-    else if (
-        lower.includes("weapon") ||
-        lower.includes("attack") ||
-        lower.includes("threat")
-    ) {
+    else if(
+        text.includes("accident") ||
+        text.includes("crash") ||
+        text.includes("collision")
+    ){
 
-        incident =
-            "SECURITY THREAT";
-
-        risk =
-            "HIGH";
-
-        authority =
-            "Security Authority";
-
-        action =
-            "Immediate verification and security response recommended.";
+        type = "Traffic Collision";
+        severity = "HIGH";
+        agency = "Emergency Response";
 
     }
 
 
-    else if (
-        lower.includes("theft") ||
-        lower.includes("robbery") ||
-        lower.includes("suspicious")
-    ) {
+    else if(
+        text.includes("fight") ||
+        text.includes("weapon") ||
+        text.includes("threat")
+    ){
 
-        incident =
-            "SUSPICIOUS ACTIVITY";
-
-        risk =
-            "MEDIUM";
-
-        authority =
-            "Security Authority";
-
-        action =
-            "Verify the reported activity and assess the situation.";
+        type = "Security Threat";
+        severity = "HIGH";
+        agency = "Police";
 
     }
 
 
-    document.getElementById("incident")
-        .innerText = incident;
+    else if(
+        text.includes("crowd") ||
+        text.includes("people")
+    ){
+
+        type = "Crowd Disturbance";
+        severity = "MEDIUM";
+        agency = "Security Operations";
+
+    }
 
 
-    const riskElement =
-        document.getElementById("risk");
-
-    riskElement.innerText =
-        risk;
+    document
+        .getElementById("typeResult")
+        .innerText = type;
 
 
-    riskElement.className =
-        "risk " + risk.toLowerCase();
+    document
+        .getElementById("severityResult")
+        .innerText = severity;
 
 
-    document.getElementById("authority")
-        .innerText = authority;
+    document
+        .getElementById("agencyResult")
+        .innerText = agency;
 
 
-    document.getElementById("action")
-        .innerText = action;
-
-
-    const reporter =
-        phone || "ANONYMOUS";
-
-
-    const reportId =
-        "JAN-" +
-        Math.random()
-            .toString(36)
-            .substring(2, 8)
-            .toUpperCase();
-
-
-    const now =
-        new Date()
-            .toLocaleString();
-
-
-    const report =
-
-`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              JANBAK AI
-        AUTHORITY INCIDENT REPORT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-REPORT ID
-${reportId}
-
-DATE / TIME
-${now}
-
-REPORTER
-${reporter}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-INCIDENT CLASSIFICATION
-${incident}
-
-RISK LEVEL
-${risk}
-
-ASSIGNED AUTHORITY
-${authority}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-DETECTED INFORMATION
-${text}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-RECOMMENDED ACTION
-${action}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-STATUS
-REQUIRES HUMAN REVIEW
-
-JANBAK AI provides decision-support analysis.
-Final response decisions remain with authorized personnel.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
-
-
-    document.getElementById("report")
-        .innerText = report;
-
-
-    document.getElementById("dashboard")
-        .style.display = "block";
+    document
+        .getElementById("aiResult")
+        .classList
+        .add("show");
 
 }
 
@@ -1000,4 +1128,3 @@ Final response decisions remain with authorized personnel.
 
 </body>
 </html>
-```
