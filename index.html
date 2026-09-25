@@ -394,6 +394,8 @@ body{
     font-size:22px;
 }
 
+/* INPUT TYPES */
+
 .input-types{
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -454,15 +456,26 @@ body{
 .record-btn.recording{
     background:#ff5d5d;
     color:white;
-    box-shadow:0 0 0 10px rgba(255,80,80,.08),
-               0 0 30px rgba(255,80,80,.45);
+    box-shadow:
+        0 0 0 10px rgba(255,80,80,.08),
+        0 0 30px rgba(255,80,80,.45);
     animation:pulse 1.3s infinite;
 }
 
 @keyframes pulse{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.05);}
-    100%{transform:scale(1);}
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.05);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
 }
 
 .record-status{
@@ -495,6 +508,8 @@ body{
     margin-top:15px;
     display:none;
 }
+
+/* TEXT */
 
 textarea{
     width:100%;
@@ -532,6 +547,11 @@ textarea:focus{
     display:block;
 }
 
+.result-title{
+    font-size:14px;
+    font-weight:700;
+}
+
 .result-grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -557,6 +577,8 @@ textarea:focus{
     font-weight:700;
 }
 
+/* PROCESSING */
+
 .processing{
     display:none;
     text-align:center;
@@ -566,6 +588,23 @@ textarea:focus{
 }
 
 .processing.show{
+    display:block;
+}
+
+/* IMAGE MESSAGE */
+
+.image-message{
+    display:none;
+    background:#080d14;
+    border:1px solid #222d39;
+    border-radius:12px;
+    padding:30px;
+    text-align:center;
+    color:#8d99a8;
+    margin-bottom:15px;
+}
+
+.image-message.show{
     display:block;
 }
 
@@ -598,6 +637,7 @@ textarea:focus{
     .dashboard-grid{
         grid-template-columns:1fr;
     }
+
 }
 
 @media(max-width:550px){
@@ -619,11 +659,11 @@ textarea:focus{
         align-items:flex-start;
         flex-direction:column;
     }
+
 }
 
 </style>
 </head>
-
 
 <body>
 
@@ -1095,6 +1135,28 @@ textarea:focus{
         </div>
 
 
+        <!-- IMAGE PANEL -->
+
+        <div
+            class="image-message"
+            id="imageMessage"
+        >
+
+            <div style="font-size:35px;margin-bottom:10px;">
+                ▣
+            </div>
+
+            <div style="font-size:14px;color:#f4f7fb;margin-bottom:6px;">
+                Visual Intelligence
+            </div>
+
+            <div>
+                Image analysis is part of the planned JANBAK expansion.
+            </div>
+
+        </div>
+
+
         <!-- TEXT PANEL -->
 
         <textarea
@@ -1104,13 +1166,17 @@ textarea:focus{
         ></textarea>
 
 
+        <!-- PROCESSING -->
+
         <div
             class="processing"
             id="processing"
         >
-            Processing incident...
+            Analyzing incident with JANBAK Intelligence...
         </div>
 
+
+        <!-- ANALYZE -->
 
         <button
             class="primary-btn analyze"
@@ -1127,9 +1193,9 @@ textarea:focus{
             id="aiResult"
         >
 
-            <strong>
+            <div class="result-title">
                 AI-Assisted Incident Analysis
-            </strong>
+            </div>
 
             <div class="result-grid">
 
@@ -1198,11 +1264,17 @@ textarea:focus{
 let mediaRecorder = null;
 let audioChunks = [];
 let audioStream = null;
+
 let recognition = null;
+
 let isRecording = false;
+
 let seconds = 0;
 let timerInterval = null;
+
 let currentInput = "voice";
+
+let finalTranscript = "";
 
 
 /* =========================
@@ -1243,7 +1315,7 @@ function selectInput(type, element){
 
     document
         .querySelectorAll(".input-card")
-        .forEach(card => {
+        .forEach(function(card){
 
             card.classList.remove("selected");
 
@@ -1258,30 +1330,36 @@ function selectInput(type, element){
     const textArea =
         document.getElementById("incidentText");
 
+    const imageMessage =
+        document.getElementById("imageMessage");
+
+
+    voicePanel.classList.remove("show");
+
+    imageMessage.classList.remove("show");
+
+    textArea.style.display = "none";
+
 
     if(type === "voice"){
 
         voicePanel.classList.add("show");
 
-        textArea.style.display = "none";
-
     }
 
-    else if(type === "text"){
 
-        voicePanel.classList.remove("show");
+    if(type === "text"){
 
         textArea.style.display = "block";
 
+        textArea.focus();
+
     }
 
-    else{
 
-        voicePanel.classList.remove("show");
+    if(type === "image"){
 
-        textArea.style.display = "none";
-
-        alert("Image analysis module is part of the planned JANBAK expansion.");
+        imageMessage.classList.add("show");
 
     }
 
@@ -1300,22 +1378,28 @@ async function toggleRecording(){
 
     }else{
 
-        startRecording();
+        await startRecording();
 
     }
 
 }
 
 
+/* =========================
+   START RECORDING
+========================= */
+
 async function startRecording(){
 
     try{
 
-        if(!navigator.mediaDevices ||
-           !navigator.mediaDevices.getUserMedia){
+        if(
+            !navigator.mediaDevices ||
+            !navigator.mediaDevices.getUserMedia
+        ){
 
             alert(
-                "Microphone access is not supported here. Please open JANBAK using HTTPS in a modern browser."
+                "Microphone access is not supported. Please use HTTPS and a modern browser."
             );
 
             return;
@@ -1331,55 +1415,78 @@ async function startRecording(){
 
         audioChunks = [];
 
+        finalTranscript = "";
+
+
+        const transcriptBox =
+            document.getElementById("transcript");
+
+
+        transcriptBox.innerText =
+            "Listening...";
+
+
+        transcriptBox.dataset.finalText = "";
+
 
         mediaRecorder =
             new MediaRecorder(audioStream);
 
 
-        mediaRecorder.ondataavailable = event => {
+        mediaRecorder.ondataavailable =
+            function(event){
 
-            if(event.data.size > 0){
+                if(event.data.size > 0){
 
-                audioChunks.push(event.data);
+                    audioChunks.push(event.data);
 
-            }
+                }
 
-        };
-
-
-        mediaRecorder.onstop = () => {
-
-            const audioBlob =
-                new Blob(
-                    audioChunks,
-                    {type:"audio/webm"}
-                );
+            };
 
 
-            const audioURL =
-                URL.createObjectURL(audioBlob);
+        mediaRecorder.onstop =
+            function(){
+
+                const audioBlob =
+                    new Blob(
+                        audioChunks,
+                        {type:"audio/webm"}
+                    );
 
 
-            const audioPreview =
-                document.getElementById("audioPreview");
+                const audioURL =
+                    URL.createObjectURL(audioBlob);
 
 
-            audioPreview.src =
-                audioURL;
+                const audioPreview =
+                    document.getElementById("audioPreview");
 
-            audioPreview.style.display =
-                "block";
 
-        };
+                audioPreview.src =
+                    audioURL;
+
+
+                audioPreview.style.display =
+                    "block";
+
+            };
 
 
         mediaRecorder.start();
+
 
         isRecording = true;
 
         seconds = 0;
 
-        updateTimer();
+        document
+            .getElementById("timer")
+            .innerText = "00:00";
+
+
+        clearInterval(timerInterval);
+
 
         timerInterval =
             setInterval(updateTimer,1000);
@@ -1423,8 +1530,10 @@ async function startRecording(){
 
 function stopRecording(){
 
-    if(mediaRecorder &&
-       mediaRecorder.state !== "inactive"){
+    if(
+        mediaRecorder &&
+        mediaRecorder.state !== "inactive"
+    ){
 
         mediaRecorder.stop();
 
@@ -1435,7 +1544,13 @@ function stopRecording(){
 
         audioStream
             .getTracks()
-            .forEach(track => track.stop());
+            .forEach(function(track){
+
+                track.stop();
+
+            });
+
+        audioStream = null;
 
     }
 
@@ -1443,13 +1558,16 @@ function stopRecording(){
     if(recognition){
 
         try{
+
             recognition.stop();
-        }catch(e){}
+
+        }catch(error){}
 
     }
 
 
     clearInterval(timerInterval);
+
 
     isRecording = false;
 
@@ -1469,6 +1587,20 @@ function stopRecording(){
         "Recording complete";
 
 
+    const transcriptBox =
+        document.getElementById("transcript");
+
+
+    if(
+        !finalTranscript &&
+        transcriptBox.innerText === "Listening..."
+    ){
+
+        transcriptBox.innerText =
+            "Audio recorded. No speech was detected.";
+
+    }
+
 }
 
 
@@ -1480,8 +1612,10 @@ function updateTimer(){
 
     seconds++;
 
+
     const minutes =
         Math.floor(seconds / 60);
+
 
     const remainingSeconds =
         seconds % 60;
@@ -1508,12 +1642,14 @@ function startSpeechRecognition(){
         window.webkitSpeechRecognition;
 
 
+    const transcriptBox =
+        document.getElementById("transcript");
+
+
     if(!SpeechRecognition){
 
-        document
-            .getElementById("transcript")
-            .innerText =
-            "Audio recorded. Speech transcription is not supported in this browser.";
+        transcriptBox.innerText =
+            "Audio recorded. Speech recognition is not supported in this browser.";
 
         return;
 
@@ -1531,88 +1667,88 @@ function startSpeechRecognition(){
     recognition.lang = "en-US";
 
 
-    recognition.onresult = event => {
+    recognition.onresult =
+        function(event){
 
-        let finalText = "";
-        let interimText = "";
-
-
-        for(
-            let i = event.resultIndex;
-            i < event.results.length;
-            i++
-        ){
-
-            const transcript =
-                event.results[i][0].transcript;
+            let interimText = "";
 
 
-            if(event.results[i].isFinal){
+            for(
+                let i = event.resultIndex;
+                i < event.results.length;
+                i++
+            ){
 
-                finalText += transcript + " ";
+                const currentText =
+                    event.results[i][0].transcript;
 
-            }else{
 
-                interimText += transcript;
+                if(event.results[i].isFinal){
+
+                    finalTranscript +=
+                        currentText + " ";
+
+                }else{
+
+                    interimText += currentText;
+
+                }
 
             }
 
-        }
+
+            transcriptBox.innerText =
+                (
+                    finalTranscript +
+                    interimText
+                ).trim() ||
+                "Listening...";
 
 
-        const box =
-            document.getElementById("transcript");
+            document
+                .getElementById("incidentText")
+                .value =
+                finalTranscript.trim();
+
+        };
 
 
-        if(finalText){
+    recognition.onerror =
+        function(event){
 
-            const existing =
-                box.dataset.finalText || "";
+            console.log(
+                "Speech recognition error:",
+                event.error
+            );
 
-
-            box.dataset.finalText =
-                existing + finalText;
-
-        }
-
-
-        box.innerText =
-            (box.dataset.finalText || "")
-            + interimText;
+        };
 
 
-        document
-            .getElementById("incidentText")
-            .value =
-            box.dataset.finalText || "";
+    recognition.onend =
+        function(){
 
-    };
+            if(isRecording){
 
+                try{
 
-    recognition.onerror = error => {
+                    recognition.start();
 
-        console.log(
-            "Speech recognition:",
-            error.error
-        );
+                }catch(error){}
 
-    };
+            }
+
+        };
 
 
-    recognition.onend = () => {
+    try{
 
-        if(isRecording){
+        recognition.start();
 
-            try{
-                recognition.start();
-            }catch(e){}
+    }catch(error){
 
-        }
+        console.log(error);
 
-    };
-
-
-    recognition.start();
+    }
 
 }
 
@@ -1630,30 +1766,54 @@ function analyzeIncident(){
 
         text =
             document
-            .getElementById("transcript")
-            .innerText;
+                .getElementById("transcript")
+                .innerText
+                .trim();
 
-    }else{
 
-        text =
-            document
-            .getElementById("incidentText")
-            .value;
+        if(
+            !text ||
+            text === "Voice transcript will appear here..." ||
+            text === "Listening..."
+        ){
+
+            alert(
+                "Please record an incident first."
+            );
+
+            return;
+
+        }
 
     }
 
 
-    text =
-        text.toLowerCase();
+    else if(currentInput === "text"){
+
+        text =
+            document
+                .getElementById("incidentText")
+                .value
+                .trim();
 
 
-    if(
-        !text.trim() ||
-        text === "voice transcript will appear here..."
-    ){
+        if(!text){
+
+            alert(
+                "Please describe the incident first."
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    else{
 
         alert(
-            "Please provide incident information first."
+            "Image analysis is part of the planned JANBAK expansion."
         );
 
         return;
@@ -1661,19 +1821,33 @@ function analyzeIncident(){
     }
 
 
-    document
-        .getElementById("processing")
-        .classList
-        .add("show");
+    const lowerText =
+        text.toLowerCase();
 
 
-    setTimeout(() => {
+    const processing =
+        document.getElementById("processing");
+
+
+    const result =
+        document.getElementById("aiResult");
+
+
+    processing.classList.add("show");
+
+    result.classList.remove("show");
+
+
+    setTimeout(function(){
+
 
         let type =
             "General Security Incident";
 
+
         let severity =
             "MEDIUM";
+
 
         let agency =
             "Security Operations";
@@ -1682,16 +1856,28 @@ function analyzeIncident(){
         /* FIRE */
 
         if(
-            text.includes("fire") ||
-            text.includes("smoke") ||
-            text.includes("burn")
+
+            lowerText.includes("fire") ||
+            lowerText.includes("smoke") ||
+            lowerText.includes("burn") ||
+            lowerText.includes("flame") ||
+
+            lowerText.includes("حريق") ||
+            lowerText.includes("دخان") ||
+            lowerText.includes("نار")
+
         ){
 
-            type = "Fire";
+            type =
+                "Fire";
 
-            severity = "HIGH";
 
-            agency = "Civil Defense";
+            severity =
+                "HIGH";
+
+
+            agency =
+                "Civil Defense";
 
         }
 
@@ -1699,35 +1885,59 @@ function analyzeIncident(){
         /* ACCIDENT */
 
         else if(
-            text.includes("accident") ||
-            text.includes("crash") ||
-            text.includes("collision") ||
-            text.includes("car accident")
+
+            lowerText.includes("accident") ||
+            lowerText.includes("crash") ||
+            lowerText.includes("collision") ||
+            lowerText.includes("car accident") ||
+
+            lowerText.includes("حادث") ||
+            lowerText.includes("تصادم") ||
+            lowerText.includes("صدم")
+
         ){
 
-            type = "Traffic Collision";
+            type =
+                "Traffic Collision";
 
-            severity = "HIGH";
 
-            agency = "Emergency Response";
+            severity =
+                "HIGH";
+
+
+            agency =
+                "Emergency Response";
 
         }
 
 
-        /* SECURITY */
+        /* SECURITY THREAT */
 
         else if(
-            text.includes("fight") ||
-            text.includes("weapon") ||
-            text.includes("threat") ||
-            text.includes("attack")
+
+            lowerText.includes("fight") ||
+            lowerText.includes("weapon") ||
+            lowerText.includes("threat") ||
+            lowerText.includes("attack") ||
+            lowerText.includes("gun") ||
+
+            lowerText.includes("شجار") ||
+            lowerText.includes("سلاح") ||
+            lowerText.includes("تهديد") ||
+            lowerText.includes("هجوم")
+
         ){
 
-            type = "Security Threat";
+            type =
+                "Security Threat";
 
-            severity = "HIGH";
 
-            agency = "Police";
+            severity =
+                "HIGH";
+
+
+            agency =
+                "Police";
 
         }
 
@@ -1735,16 +1945,28 @@ function analyzeIncident(){
         /* CROWD */
 
         else if(
-            text.includes("crowd") ||
-            text.includes("people") ||
-            text.includes("gathering")
+
+            lowerText.includes("crowd") ||
+            lowerText.includes("people") ||
+            lowerText.includes("gathering") ||
+            lowerText.includes("crowded") ||
+
+            lowerText.includes("تجمع") ||
+            lowerText.includes("ازدحام") ||
+            lowerText.includes("حشود")
+
         ){
 
-            type = "Crowd Disturbance";
+            type =
+                "Crowd Disturbance";
 
-            severity = "MEDIUM";
 
-            agency = "Security Operations";
+            severity =
+                "MEDIUM";
+
+
+            agency =
+                "Security Operations";
 
         }
 
@@ -1752,16 +1974,28 @@ function analyzeIncident(){
         /* THEFT */
 
         else if(
-            text.includes("theft") ||
-            text.includes("stolen") ||
-            text.includes("robbery")
+
+            lowerText.includes("theft") ||
+            lowerText.includes("stolen") ||
+            lowerText.includes("robbery") ||
+            lowerText.includes("steal") ||
+
+            lowerText.includes("سرقة") ||
+            lowerText.includes("مسروق") ||
+            lowerText.includes("لص")
+
         ){
 
-            type = "Theft / Robbery";
+            type =
+                "Theft / Robbery";
 
-            severity = "HIGH";
 
-            agency = "Police";
+            severity =
+                "HIGH";
+
+
+            agency =
+                "Police";
 
         }
 
@@ -1769,18 +2003,60 @@ function analyzeIncident(){
         /* KIDNAPPING */
 
         else if(
-            text.includes("kidnap") ||
-            text.includes("abduction")
+
+            lowerText.includes("kidnap") ||
+            lowerText.includes("abduction") ||
+
+            lowerText.includes("اختطاف") ||
+            lowerText.includes("مخطوف")
+
         ){
 
-            type = "Possible Kidnapping";
+            type =
+                "Possible Kidnapping";
 
-            severity = "HIGH";
 
-            agency = "Police";
+            severity =
+                "HIGH";
+
+
+            agency =
+                "Police";
 
         }
 
+
+        /* MEDICAL */
+
+        else if(
+
+            lowerText.includes("injury") ||
+            lowerText.includes("injured") ||
+            lowerText.includes("unconscious") ||
+            lowerText.includes("ambulance") ||
+
+            lowerText.includes("إصابة") ||
+            lowerText.includes("مصاب") ||
+            lowerText.includes("إغماء") ||
+            lowerText.includes("اسعاف")
+
+        ){
+
+            type =
+                "Medical Emergency";
+
+
+            severity =
+                "HIGH";
+
+
+            agency =
+                "Emergency Medical Services";
+
+        }
+
+
+        /* RESULTS */
 
         document
             .getElementById("typeResult")
@@ -1800,16 +2076,10 @@ function analyzeIncident(){
             agency;
 
 
-        document
-            .getElementById("aiResult")
-            .classList
-            .add("show");
+        processing.classList.remove("show");
 
 
-        document
-            .getElementById("processing")
-            .classList
-            .remove("show");
+        result.classList.add("show");
 
 
     },700);
@@ -1818,20 +2088,24 @@ function analyzeIncident(){
 
 
 /* =========================
-   RESET TRANSCRIPT
+   CLOSE MODAL OUTSIDE
 ========================= */
 
 document
     .getElementById("incidentModal")
-    .addEventListener("click", function(event){
+    .addEventListener(
+        "click",
+        function(event){
 
-        if(event.target === this){
+            if(event.target === this){
 
-            closeModal();
+                closeModal();
+
+            }
 
         }
+    );
 
-    });
 
 </script>
 
