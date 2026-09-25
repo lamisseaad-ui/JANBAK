@@ -22,18 +22,12 @@ body{
     overflow-x:hidden;
 }
 
-/* =========================
-   LAYOUT
-========================= */
-
 .app{
     display:flex;
     min-height:100vh;
 }
 
-/* =========================
-   SIDEBAR
-========================= */
+/* SIDEBAR */
 
 .sidebar{
     width:250px;
@@ -105,9 +99,7 @@ body{
     border-left:3px solid white;
 }
 
-/* =========================
-   MAIN
-========================= */
+/* MAIN */
 
 .main{
     margin-left:250px;
@@ -132,6 +124,7 @@ body{
     gap:8px;
     color:#9ba6b5;
     font-size:12px;
+    margin-top:5px;
 }
 
 .status-dot{
@@ -141,10 +134,6 @@ body{
     background:#42d392;
     box-shadow:0 0 12px #42d392;
 }
-
-/* =========================
-   BUTTON
-========================= */
 
 .primary-btn{
     background:#f4f7fb;
@@ -162,9 +151,7 @@ body{
     opacity:.9;
 }
 
-/* =========================
-   METRICS
-========================= */
+/* METRICS */
 
 .metrics{
     display:grid;
@@ -197,9 +184,7 @@ body{
     margin-top:8px;
 }
 
-/* =========================
-   GRID
-========================= */
+/* GRID */
 
 .dashboard-grid{
     display:grid;
@@ -233,9 +218,7 @@ body{
     margin-top:4px;
 }
 
-/* =========================
-   MAP
-========================= */
+/* MAP */
 
 .map{
     height:340px;
@@ -307,9 +290,7 @@ body{
     box-shadow:0 0 20px rgba(255,80,80,.8);
 }
 
-/* =========================
-   INCIDENTS
-========================= */
+/* INCIDENTS */
 
 .incident{
     padding:16px 20px;
@@ -373,9 +354,7 @@ body{
     color:#55dca0;
 }
 
-/* =========================
-   NEW INCIDENT
-========================= */
+/* MODAL */
 
 .modal{
     position:fixed;
@@ -394,6 +373,8 @@ body{
 
 .modal-box{
     width:min(700px,92%);
+    max-height:90vh;
+    overflow-y:auto;
     background:#0d131c;
     border:1px solid #26313e;
     border-radius:18px;
@@ -441,6 +422,80 @@ body{
     margin-bottom:9px;
 }
 
+/* VOICE */
+
+.voice-panel{
+    display:none;
+    text-align:center;
+    background:#080d14;
+    border:1px solid #222d39;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:15px;
+}
+
+.voice-panel.show{
+    display:block;
+}
+
+.record-btn{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    border:none;
+    background:#f4f7fb;
+    color:#080c12;
+    font-size:28px;
+    cursor:pointer;
+    transition:.2s;
+    margin-bottom:15px;
+}
+
+.record-btn.recording{
+    background:#ff5d5d;
+    color:white;
+    box-shadow:0 0 0 10px rgba(255,80,80,.08),
+               0 0 30px rgba(255,80,80,.45);
+    animation:pulse 1.3s infinite;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.05);}
+    100%{transform:scale(1);}
+}
+
+.record-status{
+    color:#8d99a8;
+    font-size:12px;
+    margin-bottom:12px;
+}
+
+.timer{
+    font-size:24px;
+    font-weight:700;
+    letter-spacing:2px;
+    margin-bottom:10px;
+}
+
+.transcript{
+    background:#101720;
+    border:1px solid #202c38;
+    border-radius:9px;
+    padding:13px;
+    color:#b7c0cb;
+    text-align:left;
+    font-size:12px;
+    min-height:55px;
+    margin-top:15px;
+}
+
+.audio-preview{
+    width:100%;
+    margin-top:15px;
+    display:none;
+}
+
 textarea{
     width:100%;
     height:130px;
@@ -462,9 +517,7 @@ textarea:focus{
     width:100%;
 }
 
-/* =========================
-   AI RESULT
-========================= */
+/* AI RESULT */
 
 .ai-result{
     margin-top:20px;
@@ -504,9 +557,19 @@ textarea:focus{
     font-weight:700;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+.processing{
+    display:none;
+    text-align:center;
+    color:#7f8a99;
+    font-size:12px;
+    margin:12px 0;
+}
+
+.processing.show{
+    display:block;
+}
+
+/* RESPONSIVE */
 
 @media(max-width:900px){
 
@@ -566,7 +629,7 @@ textarea:focus{
 
 <div class="app">
 
-<!-- ================= SIDEBAR ================= -->
+<!-- SIDEBAR -->
 
 <aside class="sidebar">
 
@@ -583,7 +646,6 @@ textarea:focus{
 
     </div>
 
-
     <div class="nav-title">OPERATIONS</div>
 
     <div class="nav-item active">
@@ -598,7 +660,6 @@ textarea:focus{
         ◉ <span>Live Incidents</span>
     </div>
 
-
     <div class="nav-title">INTELLIGENCE</div>
 
     <div class="nav-item">
@@ -609,7 +670,6 @@ textarea:focus{
         ◇ <span>Risk Analysis</span>
     </div>
 
-
     <div class="nav-title">SYSTEM</div>
 
     <div class="nav-item">
@@ -619,18 +679,22 @@ textarea:focus{
 </aside>
 
 
-<!-- ================= MAIN ================= -->
+<!-- MAIN -->
 
 <main class="main">
 
     <div class="topbar">
 
         <div>
+
             <h2>Security Operations Dashboard</h2>
 
             <div class="status">
+
                 <span class="status-dot"></span>
+
                 JANBAK Intelligence System — Online
+
             </div>
 
         </div>
@@ -642,44 +706,83 @@ textarea:focus{
     </div>
 
 
-    <!-- ================= METRICS ================= -->
+    <!-- METRICS -->
 
     <section class="metrics">
 
         <div class="metric">
-            <div class="metric-label">ACTIVE INCIDENTS</div>
-            <div class="metric-value" id="activeCount">12</div>
-            <div class="metric-sub">Currently monitored</div>
+
+            <div class="metric-label">
+                ACTIVE INCIDENTS
+            </div>
+
+            <div class="metric-value" id="activeCount">
+                12
+            </div>
+
+            <div class="metric-sub">
+                Currently monitored
+            </div>
+
         </div>
 
 
         <div class="metric">
-            <div class="metric-label">HIGH RISK</div>
-            <div class="metric-value">03</div>
-            <div class="metric-sub">Require immediate attention</div>
+
+            <div class="metric-label">
+                HIGH RISK
+            </div>
+
+            <div class="metric-value">
+                03
+            </div>
+
+            <div class="metric-sub">
+                Require immediate attention
+            </div>
+
         </div>
 
 
         <div class="metric">
-            <div class="metric-label">AI ANALYSIS</div>
-            <div class="metric-value">98%</div>
-            <div class="metric-sub">Reports successfully processed</div>
+
+            <div class="metric-label">
+                AI ANALYSIS
+            </div>
+
+            <div class="metric-value">
+                98%
+            </div>
+
+            <div class="metric-sub">
+                Reports successfully processed
+            </div>
+
         </div>
 
 
         <div class="metric">
-            <div class="metric-label">RESPONSE STATUS</div>
-            <div class="metric-value">94%</div>
-            <div class="metric-sub">Routed to responsible agency</div>
+
+            <div class="metric-label">
+                RESPONSE STATUS
+            </div>
+
+            <div class="metric-value">
+                94%
+            </div>
+
+            <div class="metric-sub">
+                Routed to responsible agency
+            </div>
+
         </div>
 
     </section>
 
 
-    <!-- ================= DASHBOARD ================= -->
+    <!-- DASHBOARD -->
 
     <section class="dashboard-grid">
-
 
         <!-- MAP -->
 
@@ -688,6 +791,7 @@ textarea:focus{
             <div class="panel-header">
 
                 <div>
+
                     <div class="panel-title">
                         Incident Intelligence Map
                     </div>
@@ -695,6 +799,7 @@ textarea:focus{
                     <div class="panel-sub">
                         Active security events
                     </div>
+
                 </div>
 
                 <span class="badge high">
@@ -728,6 +833,7 @@ textarea:focus{
             <div class="panel-header">
 
                 <div>
+
                     <div class="panel-title">
                         Live Incident Feed
                     </div>
@@ -735,6 +841,7 @@ textarea:focus{
                     <div class="panel-sub">
                         Recent intelligence events
                     </div>
+
                 </div>
 
             </div>
@@ -864,7 +971,7 @@ textarea:focus{
 </div>
 
 
-<!-- ================= NEW INCIDENT MODAL ================= -->
+<!-- NEW INCIDENT MODAL -->
 
 <div class="modal" id="incidentModal">
 
@@ -873,10 +980,13 @@ textarea:focus{
         <div class="modal-head">
 
             <div>
+
                 <h2>New Incident</h2>
+
                 <div class="panel-sub">
                     Submit information for AI-assisted analysis
                 </div>
+
             </div>
 
             <div class="close" onclick="closeModal()">
@@ -886,44 +996,136 @@ textarea:focus{
         </div>
 
 
+        <!-- INPUT TYPES -->
+
         <div class="input-types">
 
-            <div class="input-card selected">
-                <div class="input-icon">🎙</div>
-                <div>Voice</div>
+            <div
+                class="input-card selected"
+                onclick="selectInput('voice', this)"
+            >
+
+                <div class="input-icon">
+                    🎙
+                </div>
+
+                <div>
+                    Voice
+                </div>
+
             </div>
 
-            <div class="input-card">
-                <div class="input-icon">▣</div>
-                <div>Image</div>
+
+            <div
+                class="input-card"
+                onclick="selectInput('image', this)"
+            >
+
+                <div class="input-icon">
+                    ▣
+                </div>
+
+                <div>
+                    Image
+                </div>
+
             </div>
 
-            <div class="input-card">
-                <div class="input-icon">≡</div>
-                <div>Text</div>
+
+            <div
+                class="input-card"
+                onclick="selectInput('text', this)"
+            >
+
+                <div class="input-icon">
+                    ≡
+                </div>
+
+                <div>
+                    Text
+                </div>
+
             </div>
 
         </div>
 
 
+        <!-- VOICE PANEL -->
+
+        <div
+            class="voice-panel show"
+            id="voicePanel"
+        >
+
+            <button
+                class="record-btn"
+                id="recordButton"
+                onclick="toggleRecording()"
+            >
+                🎙
+            </button>
+
+            <div
+                class="record-status"
+                id="recordStatus"
+            >
+                Click the microphone to record an incident
+            </div>
+
+            <div
+                class="timer"
+                id="timer"
+            >
+                00:00
+            </div>
+
+            <div
+                class="transcript"
+                id="transcript"
+            >
+                Voice transcript will appear here...
+            </div>
+
+            <audio
+                id="audioPreview"
+                class="audio-preview"
+                controls
+            ></audio>
+
+        </div>
+
+
+        <!-- TEXT PANEL -->
+
         <textarea
             id="incidentText"
-            placeholder="Describe the incident...">
-        </textarea>
+            placeholder="Describe the incident..."
+            style="display:none;"
+        ></textarea>
+
+
+        <div
+            class="processing"
+            id="processing"
+        >
+            Processing incident...
+        </div>
 
 
         <button
             class="primary-btn analyze"
-            onclick="analyzeIncident()">
-
+            onclick="analyzeIncident()"
+        >
             Analyze Incident
-
         </button>
 
 
+        <!-- AI RESULT -->
+
         <div
             class="ai-result"
-            id="aiResult">
+            id="aiResult"
+        >
 
             <strong>
                 AI-Assisted Incident Analysis
@@ -939,7 +1141,8 @@ textarea:focus{
 
                     <div
                         class="result-value"
-                        id="typeResult">
+                        id="typeResult"
+                    >
                         —
                     </div>
 
@@ -954,7 +1157,8 @@ textarea:focus{
 
                     <div
                         class="result-value"
-                        id="severityResult">
+                        id="severityResult"
+                    >
                         —
                     </div>
 
@@ -969,7 +1173,8 @@ textarea:focus{
 
                     <div
                         class="result-value"
-                        id="agencyResult">
+                        id="agencyResult"
+                    >
                         —
                     </div>
 
@@ -987,6 +1192,20 @@ textarea:focus{
 <script>
 
 /* =========================
+   VARIABLES
+========================= */
+
+let mediaRecorder = null;
+let audioChunks = [];
+let audioStream = null;
+let recognition = null;
+let isRecording = false;
+let seconds = 0;
+let timerInterval = null;
+let currentInput = "voice";
+
+
+/* =========================
    MODAL
 ========================= */
 
@@ -1002,6 +1221,10 @@ function openModal(){
 
 function closeModal(){
 
+    if(isRecording){
+        stopRecording();
+    }
+
     document
         .getElementById("incidentModal")
         .classList
@@ -1014,23 +1237,384 @@ function closeModal(){
    INPUT SELECTION
 ========================= */
 
-document
-    .querySelectorAll(".input-card")
-    .forEach(card => {
+function selectInput(type, element){
 
-        card.addEventListener("click", () => {
+    currentInput = type;
 
-            document
-                .querySelectorAll(".input-card")
-                .forEach(c =>
-                    c.classList.remove("selected")
-                );
+    document
+        .querySelectorAll(".input-card")
+        .forEach(card => {
 
-            card.classList.add("selected");
+            card.classList.remove("selected");
 
         });
 
-    });
+    element.classList.add("selected");
+
+
+    const voicePanel =
+        document.getElementById("voicePanel");
+
+    const textArea =
+        document.getElementById("incidentText");
+
+
+    if(type === "voice"){
+
+        voicePanel.classList.add("show");
+
+        textArea.style.display = "none";
+
+    }
+
+    else if(type === "text"){
+
+        voicePanel.classList.remove("show");
+
+        textArea.style.display = "block";
+
+    }
+
+    else{
+
+        voicePanel.classList.remove("show");
+
+        textArea.style.display = "none";
+
+        alert("Image analysis module is part of the planned JANBAK expansion.");
+
+    }
+
+}
+
+
+/* =========================
+   RECORDING
+========================= */
+
+async function toggleRecording(){
+
+    if(isRecording){
+
+        stopRecording();
+
+    }else{
+
+        startRecording();
+
+    }
+
+}
+
+
+async function startRecording(){
+
+    try{
+
+        if(!navigator.mediaDevices ||
+           !navigator.mediaDevices.getUserMedia){
+
+            alert(
+                "Microphone access is not supported here. Please open JANBAK using HTTPS in a modern browser."
+            );
+
+            return;
+
+        }
+
+
+        audioStream =
+            await navigator.mediaDevices.getUserMedia({
+                audio:true
+            });
+
+
+        audioChunks = [];
+
+
+        mediaRecorder =
+            new MediaRecorder(audioStream);
+
+
+        mediaRecorder.ondataavailable = event => {
+
+            if(event.data.size > 0){
+
+                audioChunks.push(event.data);
+
+            }
+
+        };
+
+
+        mediaRecorder.onstop = () => {
+
+            const audioBlob =
+                new Blob(
+                    audioChunks,
+                    {type:"audio/webm"}
+                );
+
+
+            const audioURL =
+                URL.createObjectURL(audioBlob);
+
+
+            const audioPreview =
+                document.getElementById("audioPreview");
+
+
+            audioPreview.src =
+                audioURL;
+
+            audioPreview.style.display =
+                "block";
+
+        };
+
+
+        mediaRecorder.start();
+
+        isRecording = true;
+
+        seconds = 0;
+
+        updateTimer();
+
+        timerInterval =
+            setInterval(updateTimer,1000);
+
+
+        const button =
+            document.getElementById("recordButton");
+
+
+        button.classList.add("recording");
+
+        button.innerHTML = "■";
+
+
+        document
+            .getElementById("recordStatus")
+            .innerText =
+            "Recording incident...";
+
+
+        startSpeechRecognition();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Microphone permission was denied or the microphone is unavailable."
+        );
+
+    }
+
+}
+
+
+/* =========================
+   STOP RECORDING
+========================= */
+
+function stopRecording(){
+
+    if(mediaRecorder &&
+       mediaRecorder.state !== "inactive"){
+
+        mediaRecorder.stop();
+
+    }
+
+
+    if(audioStream){
+
+        audioStream
+            .getTracks()
+            .forEach(track => track.stop());
+
+    }
+
+
+    if(recognition){
+
+        try{
+            recognition.stop();
+        }catch(e){}
+
+    }
+
+
+    clearInterval(timerInterval);
+
+    isRecording = false;
+
+
+    const button =
+        document.getElementById("recordButton");
+
+
+    button.classList.remove("recording");
+
+    button.innerHTML = "🎙";
+
+
+    document
+        .getElementById("recordStatus")
+        .innerText =
+        "Recording complete";
+
+
+}
+
+
+/* =========================
+   TIMER
+========================= */
+
+function updateTimer(){
+
+    seconds++;
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const remainingSeconds =
+        seconds % 60;
+
+
+    document
+        .getElementById("timer")
+        .innerText =
+        String(minutes).padStart(2,"0")
+        + ":" +
+        String(remainingSeconds).padStart(2,"0");
+
+}
+
+
+/* =========================
+   SPEECH RECOGNITION
+========================= */
+
+function startSpeechRecognition(){
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+    if(!SpeechRecognition){
+
+        document
+            .getElementById("transcript")
+            .innerText =
+            "Audio recorded. Speech transcription is not supported in this browser.";
+
+        return;
+
+    }
+
+
+    recognition =
+        new SpeechRecognition();
+
+
+    recognition.continuous = true;
+
+    recognition.interimResults = true;
+
+    recognition.lang = "en-US";
+
+
+    recognition.onresult = event => {
+
+        let finalText = "";
+        let interimText = "";
+
+
+        for(
+            let i = event.resultIndex;
+            i < event.results.length;
+            i++
+        ){
+
+            const transcript =
+                event.results[i][0].transcript;
+
+
+            if(event.results[i].isFinal){
+
+                finalText += transcript + " ";
+
+            }else{
+
+                interimText += transcript;
+
+            }
+
+        }
+
+
+        const box =
+            document.getElementById("transcript");
+
+
+        if(finalText){
+
+            const existing =
+                box.dataset.finalText || "";
+
+
+            box.dataset.finalText =
+                existing + finalText;
+
+        }
+
+
+        box.innerText =
+            (box.dataset.finalText || "")
+            + interimText;
+
+
+        document
+            .getElementById("incidentText")
+            .value =
+            box.dataset.finalText || "";
+
+    };
+
+
+    recognition.onerror = error => {
+
+        console.log(
+            "Speech recognition:",
+            error.error
+        );
+
+    };
+
+
+    recognition.onend = () => {
+
+        if(isRecording){
+
+            try{
+                recognition.start();
+            }catch(e){}
+
+        }
+
+    };
+
+
+    recognition.start();
+
+}
 
 
 /* =========================
@@ -1039,90 +1623,215 @@ document
 
 function analyzeIncident(){
 
-    const text =
-        document
-        .getElementById("incidentText")
-        .value
-        .toLowerCase();
+    let text = "";
 
 
-    let type = "General Security Incident";
-    let severity = "MEDIUM";
-    let agency = "Security Operations";
+    if(currentInput === "voice"){
+
+        text =
+            document
+            .getElementById("transcript")
+            .innerText;
+
+    }else{
+
+        text =
+            document
+            .getElementById("incidentText")
+            .value;
+
+    }
+
+
+    text =
+        text.toLowerCase();
 
 
     if(
-        text.includes("fire") ||
-        text.includes("smoke") ||
-        text.includes("burn")
+        !text.trim() ||
+        text === "voice transcript will appear here..."
     ){
 
-        type = "Fire";
-        severity = "HIGH";
-        agency = "Civil Defense";
+        alert(
+            "Please provide incident information first."
+        );
 
-    }
-
-
-    else if(
-        text.includes("accident") ||
-        text.includes("crash") ||
-        text.includes("collision")
-    ){
-
-        type = "Traffic Collision";
-        severity = "HIGH";
-        agency = "Emergency Response";
-
-    }
-
-
-    else if(
-        text.includes("fight") ||
-        text.includes("weapon") ||
-        text.includes("threat")
-    ){
-
-        type = "Security Threat";
-        severity = "HIGH";
-        agency = "Police";
-
-    }
-
-
-    else if(
-        text.includes("crowd") ||
-        text.includes("people")
-    ){
-
-        type = "Crowd Disturbance";
-        severity = "MEDIUM";
-        agency = "Security Operations";
+        return;
 
     }
 
 
     document
-        .getElementById("typeResult")
-        .innerText = type;
-
-
-    document
-        .getElementById("severityResult")
-        .innerText = severity;
-
-
-    document
-        .getElementById("agencyResult")
-        .innerText = agency;
-
-
-    document
-        .getElementById("aiResult")
+        .getElementById("processing")
         .classList
         .add("show");
 
+
+    setTimeout(() => {
+
+        let type =
+            "General Security Incident";
+
+        let severity =
+            "MEDIUM";
+
+        let agency =
+            "Security Operations";
+
+
+        /* FIRE */
+
+        if(
+            text.includes("fire") ||
+            text.includes("smoke") ||
+            text.includes("burn")
+        ){
+
+            type = "Fire";
+
+            severity = "HIGH";
+
+            agency = "Civil Defense";
+
+        }
+
+
+        /* ACCIDENT */
+
+        else if(
+            text.includes("accident") ||
+            text.includes("crash") ||
+            text.includes("collision") ||
+            text.includes("car accident")
+        ){
+
+            type = "Traffic Collision";
+
+            severity = "HIGH";
+
+            agency = "Emergency Response";
+
+        }
+
+
+        /* SECURITY */
+
+        else if(
+            text.includes("fight") ||
+            text.includes("weapon") ||
+            text.includes("threat") ||
+            text.includes("attack")
+        ){
+
+            type = "Security Threat";
+
+            severity = "HIGH";
+
+            agency = "Police";
+
+        }
+
+
+        /* CROWD */
+
+        else if(
+            text.includes("crowd") ||
+            text.includes("people") ||
+            text.includes("gathering")
+        ){
+
+            type = "Crowd Disturbance";
+
+            severity = "MEDIUM";
+
+            agency = "Security Operations";
+
+        }
+
+
+        /* THEFT */
+
+        else if(
+            text.includes("theft") ||
+            text.includes("stolen") ||
+            text.includes("robbery")
+        ){
+
+            type = "Theft / Robbery";
+
+            severity = "HIGH";
+
+            agency = "Police";
+
+        }
+
+
+        /* KIDNAPPING */
+
+        else if(
+            text.includes("kidnap") ||
+            text.includes("abduction")
+        ){
+
+            type = "Possible Kidnapping";
+
+            severity = "HIGH";
+
+            agency = "Police";
+
+        }
+
+
+        document
+            .getElementById("typeResult")
+            .innerText =
+            type;
+
+
+        document
+            .getElementById("severityResult")
+            .innerText =
+            severity;
+
+
+        document
+            .getElementById("agencyResult")
+            .innerText =
+            agency;
+
+
+        document
+            .getElementById("aiResult")
+            .classList
+            .add("show");
+
+
+        document
+            .getElementById("processing")
+            .classList
+            .remove("show");
+
+
+    },700);
+
 }
+
+
+/* =========================
+   RESET TRANSCRIPT
+========================= */
+
+document
+    .getElementById("incidentModal")
+    .addEventListener("click", function(event){
+
+        if(event.target === this){
+
+            closeModal();
+
+        }
+
+    });
 
 </script>
 
